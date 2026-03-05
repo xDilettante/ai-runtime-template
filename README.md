@@ -1,111 +1,38 @@
 # ai-runtime-template
 
-Шаблон репозитория для AI-инфраструктуры (Codex + Qwen) без runtime-кода приложения.
+Шаблон AI-инфраструктуры для Codex и Qwen.
 
-## 1. Назначение
+Репозиторий содержит только инфраструктуру оркестрации: инструкции, роли/агенты, policy/playbook, валидацию и bootstrap для новых машин. Runtime-код приложения сюда не входит.
 
-`ai-runtime-template` нужен как переносимая база для новых проектов и новых компьютеров:
-- единые инструкции для Codex и Qwen,
-- каталоги ролей/агентов,
-- orchestration/policy документы,
-- скрипты валидации и bootstrap.
+## 1) Возможности
 
-Репозиторий специально **не** содержит `cmd/pkg` и служебные runtime-артефакты продукта.
+- Единый baseline инструкций для Codex и Qwen.
+- Каталоги специализированных агентов (roles/agents).
+- Правила оркестрации S1..Sn (sequential-first).
+- Stateful resume через `.ai-state`.
+- Watchdog/anti-stall протокол.
+- Скрипты проверки лимитов и синхронизации инструкций.
+- Переносимые глобальные инструкции для новых ПК.
 
-## 2. Что внутри
+## 2) Как это работает
 
-- `.codex/` — инфраструктура Codex (roles, policy, orchestration, config, scripts).
-- `.qwen/` — инфраструктура Qwen (agents, policy, orchestration).
-- `AGENTS.md` — проектный entrypoint для Codex.
-- `QWEN.md` — проектный entrypoint для Qwen.
-- `CODEX.md` — доп. проектные правила Codex.
-- `docs/` — практики, чеклисты, playbooks, аудитные документы.
-- `scripts/` — утилиты проверки/инициализации.
-- `bootstrap/global-instructions/` — снапшоты глобальных инструкций для нового ПК.
-
-## 3. Что исключено намеренно
-
-- runtime-код приложения (`cmd/`, `pkg/`, `configs/`),
-- `.ai-state/` (генерируется локально),
-- бинарники, логи, coverage/report артефакты,
-- `.git` исходного проекта.
-
-## 4. Требования
-
-- Linux/macOS shell (bash)
-- Python 3.10+
-- (опционально) Codex/Qwen CLI, если запускаете локально
-
-## 5. Быстрый старт
-
-```bash
-cd ai-runtime-template
-
-# 1) Установить глобальные инструкции в домашнюю директорию
-bash scripts/bootstrap_global_instructions.sh
-
-# 2) Проверить лимиты инструкций
-python3 scripts/check_instruction_limits.py
-
-# 3) Проверить синхронизацию проектных инструкций
-python3 scripts/verify_ai_policy_sync.py
-
-# 4) Инициализировать runtime-state (локально, не в git)
-python3 scripts/init_ai_state_runtime.py
-
-# 5) Проверить схему runtime-state
-python3 scripts/validate_ai_state_schema.py
-```
-
-## 6. Глобальные инструкции для новых компьютеров
-
-Снапшоты лежат в:
-- `bootstrap/global-instructions/GLOBAL_CODEX_AGENTS.md`
-- `bootstrap/global-instructions/GLOBAL_QWEN_QWEN.md`
-
-Автоустановка:
-
-```bash
-bash scripts/bootstrap_global_instructions.sh
-```
-
-Скрипт:
-- копирует файлы в `~/.codex/AGENTS.md` и `~/.qwen/QWEN.md`,
-- создает backup текущих файлов (`.bak.<timestamp>`), если они уже есть.
-
-## 7. Модель приоритетов инструкций
-
-Приоритет выполнения:
-1. system/developer/user runtime instructions
+Слои инструкций (по приоритету):
+1. runtime system/developer/user instructions
 2. project-local entrypoint (`AGENTS.md` / `QWEN.md`)
 3. global entrypoint (`~/.codex/AGENTS.md` / `~/.qwen/QWEN.md`)
 
-Практика:
-- глобальные файлы держим стабильными (fallback baseline),
-- проектные файлы — конкретика проекта и текущие нюансы.
+Оркестрация:
+- главный Codex/Qwen = единственный исполнитель control-вызовов,
+- coordinator-агенты = advisory-only (подбор/маршрутизация, без nested orchestration),
+- default режим = sequential,
+- parallel только для независимых merge-safe задач.
 
-## 8. Типовой рабочий цикл
+Cross-runtime:
+- разрешен только `Codex -> Qwen` (не более 1 внешнего Qwen worker на top-level turn),
+- `Qwen -> Codex` запрещен,
+- рекурсивные цепочки запрещены.
 
-Перед сессией:
-
-```bash
-python3 scripts/check_instruction_limits.py
-python3 scripts/verify_ai_policy_sync.py
-```
-
-После правок инструкций:
-
-```bash
-python3 scripts/check_instruction_limits.py
-python3 scripts/verify_ai_policy_sync.py
-python3 scripts/validate_ai_state_schema.py
-```
-
-Если работаете и в Codex, и в Qwen одновременно:
-- используйте split runtime-state,
-- сериализуйте записи через `scripts/ai_state_with_lock.sh`.
-
-## 9. Структура каталогов (кратко)
+## 3) Структура
 
 ```text
 ai-runtime-template/
@@ -120,16 +47,175 @@ ai-runtime-template/
   CODEX.md
 ```
 
-## 10. Рекомендации по переносу в новый проект
+## 4) Быстрый старт (новая машина)
 
-1. Скопировать `ai-runtime-template` как основу.
-2. Подставить проектные нюансы в `AGENTS.md` и `QWEN.md`.
-3. Не менять глобальные файлы под конкретный проект.
-4. Проверить лимиты/синхронизацию скриптами.
-5. Зафиксировать baseline в первом коммите нового репозитория.
+```bash
+cd ai-runtime-template
 
-## 11. Файлы состояния
+# 1) Поставить глобальные инструкции в HOME
+bash scripts/bootstrap_global_instructions.sh
 
-- `STATUS.md` — оперативный статус шаблона.
-- `LICENSE` — лицензия шаблона (MIT).
+# 2) Валидация лимитов инструкций
+python3 scripts/check_instruction_limits.py
 
+# 3) Проверка синхронизации AGENTS/CODEX/QWEN с unified policy
+python3 scripts/verify_ai_policy_sync.py
+
+# 4) Инициализация runtime-state (локально)
+python3 scripts/init_ai_state_runtime.py
+
+# 5) Проверка схемы runtime-state
+python3 scripts/validate_ai_state_schema.py
+```
+
+## 5) Запуск агентов (кратко)
+
+Ниже команды для оператора в виде готовых запросов (вставляются в диалог с Codex/Qwen).
+
+### 5.1 Один агент (кратко)
+
+```text
+Режим: Chief Coordinator.
+Шаг: S1.
+Цель: <задача>.
+Scope: <файлы/модули>.
+Назначь одного профильного агента и доведи шаг до done/blocked.
+Ограничения: sequential only, step_result обязателен, agent_trace обязателен, allow_git_write=false.
+```
+
+### 5.2 Команда агентов (кратко)
+
+```text
+Режим: Chief Coordinator.
+Собери план S1..Sn и команду из <N> агентов.
+Запускай по шагам до результата, не более <K> активных одновременно.
+Ограничения: sequential по умолчанию, coordinator-агенты advisory-only, step_result + agent_trace обязательны.
+```
+
+## 6) Запуск агентов (полный шаблон)
+
+### 6.1 Полный шаблон для 1 шага
+
+```text
+Режим: Chief Coordinator.
+Цель: <что должно быть в итоге>.
+Шаг: S#.
+Scope: <пути/модули>.
+Acceptance:
+1) <критерий 1>
+2) <критерий 2>
+Ограничения:
+- sequential only
+- step_result в стандартном формате
+- agent_trace обязателен
+- allow_git_write=false
+Действие: начни выполнение сейчас и обновляй state/checkpoint/trace.
+```
+
+### 6.2 Полный шаблон для multi-step команды
+
+```text
+Режим: Chief Coordinator.
+Цель: <цель проекта/итерации>.
+Собери план S1..Sn.
+Для каждого шага укажи: агент, scope, acceptance, fallback.
+Запускай шаги последовательно, после каждого шага: validate -> decision (continue|rerun|escalate|stop).
+Ограничения:
+- coordinator/orchestrator subagents = advisory-only
+- nested orchestration запрещена
+- step_result + agent_trace обязательны
+- allow_git_write=false (если не разрешено отдельно)
+```
+
+## 7) Codex/Qwen runtime команды (инструментальный уровень)
+
+### Codex
+Типичные orchestration-вызовы:
+- `spawn_agent`
+- `send_input`
+- `wait`
+- `close_agent`
+
+Практический лимит среды: до 6 активных subagents.
+
+### Qwen
+Типичный режим:
+- task tool-call,
+- при approval-resume обязателен новый task call с `RESUME_CONTEXT` (не text-only).
+
+## 8) Stateful resume и anti-stall
+
+Если шаг остановлен на approval:
+1. статус шага -> `awaiting_approval`,
+2. после `approve/да/вноси` немедленно новый tool-call,
+3. статус -> `resumed`, затем выполнение.
+
+Watchdog проверки:
+- нет ли `next_action_required=true` без tool-call,
+- нет ли timeout шага > 8 минут.
+
+Артефакты:
+- `.ai-state/<runtime>/orchestrator/state.json`
+- `.ai-state/<runtime>/orchestrator/checkpoints/*.json`
+- `.ai-state/<runtime>/orchestrator/agent_trace.log`
+- `.ai-state/<runtime>/orchestrator/watchdog.log`
+
+## 9) Разрешение git-write
+
+По умолчанию: `allow_git_write=false`.
+
+Если нужен git-write на шаг:
+```text
+allow_git_write=true
+git_writer=chief_coordinator
+```
+
+Нельзя делать git-write неавторизованными subagents.
+
+## 10) Глобальные инструкции для переноса
+
+Снапшоты лежат в:
+- `bootstrap/global-instructions/GLOBAL_CODEX_AGENTS.md`
+- `bootstrap/global-instructions/GLOBAL_QWEN_QWEN.md`
+
+Автоустановка:
+
+```bash
+bash scripts/bootstrap_global_instructions.sh
+```
+
+Скрипт ставит их в:
+- `~/.codex/AGENTS.md`
+- `~/.qwen/QWEN.md`
+
+и делает backup старых файлов (`.bak.<timestamp>`).
+
+## 11) Ежедневный operator workflow
+
+Перед началом:
+
+```bash
+python3 scripts/check_instruction_limits.py
+python3 scripts/verify_ai_policy_sync.py
+```
+
+После изменения инструкций/политик:
+
+```bash
+python3 scripts/check_instruction_limits.py
+python3 scripts/verify_ai_policy_sync.py
+python3 scripts/validate_ai_state_schema.py
+```
+
+## 12) Основные документы
+
+- `AGENTS.md` / `QWEN.md` — проектные entrypoint-файлы.
+- `CODEX.md` — Codex runtime adapter и bridge policy.
+- `docs/AI_UNIFIED_POLICY.md` — единая политика.
+- `docs/AI_OPERATOR_CHEATSHEET.md` — операторские шаблоны.
+- `.codex/CODEX_ORCHESTRATION.md` и `.qwen/AGENT_ORCHESTRATION.md` — playbook оркестрации.
+
+## 13) Статус и лицензия
+
+- `STATUS.md` — текущее состояние шаблона.
+- `LICENSE` — MIT.
