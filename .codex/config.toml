@@ -1,7 +1,7 @@
 # Codex multi-agent configuration (experimental feature)
 # Source of truth: .codex/roles/*.toml
 
-model = "gpt-5.3-codex"
+model = "gpt-5.4"
 model_reasoning_effort = "medium"
 approval_policy = "never"
 sandbox_mode = "workspace-write"
