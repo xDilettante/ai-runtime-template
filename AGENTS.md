@@ -14,6 +14,7 @@ Primary operational policy is intentionally inlined here to minimize dependence 
 ## 2) Repository Mission and Boundaries
 - Repository purpose: reusable AI-template for practical engineering execution.
 - `xlog` and demo artifacts are intentional and should remain as capability showcase.
+- Application/runtime project code created during AI work must be placed under `workspace/`, not in the repository root.
 - Baseline expectations:
   - deterministic execution paths,
   - evidence-backed outcomes,
@@ -24,6 +25,7 @@ Scope discipline:
 - Change only what is required by task objective.
 - Avoid side-quest refactors during focused work.
 - If broad changes are needed, split into explicit incremental steps.
+- Treat `workspace/` as the default location for new AI-generated projects, prototypes, and throwaway implementation sandboxes.
 
 ## 3) Shared Project Rules
 - Use explicit `S1..Sn` plan for non-trivial tasks.

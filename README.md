@@ -4,6 +4,8 @@
 
 Репозиторий содержит только инфраструктуру оркестрации: инструкции, роли/агенты, policy/playbook, валидацию и bootstrap для новых машин. Runtime-код приложения сюда не входит.
 
+AI-created project code should be placed in `workspace/`, not in the repository root. Contents of `workspace/` are local working material and are git-ignored by default, except for the workspace instructions.
+
 ## 1) Возможности
 
 - Единый baseline инструкций для Codex и Qwen.
@@ -42,6 +44,7 @@ ai-runtime-template/
     global-instructions/
   docs/
   scripts/
+  workspace/
   AGENTS.md
   QWEN.md
   CODEX.md

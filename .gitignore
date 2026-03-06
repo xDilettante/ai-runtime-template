@@ -1,6 +1,11 @@
 # Runtime state (generated locally)
 .ai-state/
 
+# AI project workspace (keep only instructions tracked)
+workspace/*
+!workspace/AGENTS.md
+!workspace/README.md
+
 # Logs / traces
 *.log
 logs/
