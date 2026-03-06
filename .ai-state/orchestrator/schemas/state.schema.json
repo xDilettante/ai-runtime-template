@@ -1,0 +1,71 @@
+{
+  "type": "object",
+  "required": [
+    "version",
+    "run_id",
+    "goal",
+    "updated_at",
+    "queue",
+    "active_step_id",
+    "steps",
+    "last_decision"
+  ],
+  "properties": {
+    "version": {
+      "type": "integer"
+    },
+    "run_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "goal": {
+      "type": "string",
+      "minLength": 1
+    },
+    "updated_at": {
+      "type": "string",
+      "minLength": 1
+    },
+    "queue": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "step_id"
+        ],
+        "properties": {
+          "step_id": {
+            "type": "string",
+            "minLength": 1
+          }
+        }
+      }
+    },
+    "active_step_id": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "steps": {
+      "type": "object",
+      "additionalProperties": {
+        "type": "object",
+        "properties": {
+          "status": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "last_decision": {
+      "type": "string",
+      "enum": [
+        "continue",
+        "rerun",
+        "escalate",
+        "stop"
+      ]
+    }
+  }
+}

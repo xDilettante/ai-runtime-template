@@ -1,0 +1,8 @@
+{
+  "ts": "<iso8601-utc>",
+  "step_id": "S0",
+  "event": "init",
+  "reason": "runtime initialized",
+  "action": "none",
+  "details": "bootstrap event"
+}

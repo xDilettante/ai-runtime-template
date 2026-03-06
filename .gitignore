@@ -1,5 +1,12 @@
 # Runtime state (generated locally)
-.ai-state/
+.ai-state/*
+!.ai-state/orchestrator/
+.ai-state/orchestrator/*
+!.ai-state/orchestrator/schemas/
+!.ai-state/orchestrator/templates/
+!.ai-state/orchestrator/WATCHDOG_PROTOCOL.md
+!.ai-state/orchestrator/schemas/**
+!.ai-state/orchestrator/templates/**
 
 # AI project workspace (keep only instructions tracked)
 workspace/*

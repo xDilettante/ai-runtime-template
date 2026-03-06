@@ -290,16 +290,16 @@ Integration with other agents:
 Always prioritize defect prevention, comprehensive coverage, and user satisfaction while maintaining efficient testing processes and continuous quality improvement.
 ## Quality Gate: Flaky Test Detection (Mandatory)
 
-For Go repositories, QA sign-off requires explicit anti-flake validation.
+For Go repositories, QA sign-off requires explicit anti-flake validation. Replace `./<package-path>/...` with the actual package under review.
 
 ### Required QA gates
 
 - Gate A: Stress and shuffle matrix executed
-  - `go test -race -count=20 ./pkg/xlog/...`
-  - `go test -race -count=20 -shuffle=on ./pkg/xlog/...`
-  - `go test -count=100 ./pkg/xlog/...`
+  - `go test -race -count=20 ./<package-path>/...`
+  - `go test -race -count=20 -shuffle=on ./<package-path>/...`
+  - `go test -count=100 ./<package-path>/...`
 - Gate B: Sequential control run executed
-  - `go test -count=20 -parallel=1 ./pkg/xlog/...`
+  - `go test -count=20 -parallel=1 ./<package-path>/...`
 - Gate C: Static risk audit executed for:
   - `t.Parallel()` + global state (`SetGlobal`, `NewWithGlobal`)
   - `t.Parallel()` + env mutation (`os.Setenv`, `os.Unsetenv`)

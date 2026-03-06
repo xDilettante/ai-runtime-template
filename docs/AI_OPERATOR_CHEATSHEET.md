@@ -26,7 +26,7 @@ Acceptance:
 Режим: Chief Coordinator.
 Цель: исправить <проблема>.
 Шаг: S3.
-Scope: pkg/xlog/...
+Scope: AGENTS.md, README.md, scripts/...
 Acceptance:
 1) тесты проходят
 2) регрессий нет

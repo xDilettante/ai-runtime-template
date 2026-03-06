@@ -1,0 +1,107 @@
+{
+  "type": "object",
+  "required": [
+    "step_id",
+    "agent",
+    "status",
+    "summary",
+    "evidence",
+    "changes",
+    "assumptions",
+    "risks",
+    "next_decision",
+    "next_action_required",
+    "next_action",
+    "notes"
+  ],
+  "properties": {
+    "step_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "agent": {
+      "type": "string",
+      "minLength": 1
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "success",
+        "partial",
+        "blocked",
+        "awaiting_approval",
+        "timeout",
+        "orchestration_fault"
+      ]
+    },
+    "summary": {
+      "type": "string",
+      "minLength": 1
+    },
+    "evidence": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "changes": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "assumptions": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "risks": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "checks": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "name",
+          "status"
+        ],
+        "properties": {
+          "name": {
+            "type": "string",
+            "minLength": 1
+          },
+          "status": {
+            "type": "string",
+            "minLength": 1
+          },
+          "details": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "next_decision": {
+      "type": "string",
+      "enum": [
+        "continue",
+        "rerun",
+        "escalate",
+        "stop"
+      ]
+    },
+    "next_action_required": {
+      "type": "boolean"
+    },
+    "next_action": {
+      "type": "string"
+    },
+    "notes": {
+      "type": "string"
+    }
+  }
+}

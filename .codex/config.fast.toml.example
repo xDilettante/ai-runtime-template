@@ -1,0 +1,10 @@
+# Optional fast profile for trusted local use only.
+# Copy values selectively into .codex/config.toml when you explicitly want fewer prompts.
+
+model = "gpt-5.4"
+model_reasoning_effort = "medium"
+approval_policy = "never"
+sandbox_mode = "workspace-write"
+max_threads = 6
+max_depth = 3
+job_max_runtime_seconds = 1800

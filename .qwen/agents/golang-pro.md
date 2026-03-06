@@ -115,7 +115,7 @@ Build and tooling:
 - Cross-compilation setup
 - CGO usage guidelines
 - Go generate workflows
-- Makefile conventions
+- Task runner conventions (make/just/task)
 - Docker multi-stage builds
 - CI/CD optimization
 

@@ -24,7 +24,6 @@ Canonical policy for both Codex and Qwen in this repository.
 
 ## 2) Mission of This Repository
 - This repo is a reusable template for AI-assisted engineering.
-- `xlog` and demo artifacts stay in place as explicit showcase of current agent capabilities.
 - The template must remain understandable, reproducible, and easy to fork.
 
 ## 3) Operating Protocol

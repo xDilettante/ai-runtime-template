@@ -1,0 +1,10 @@
+{
+  "version": 1,
+  "run_id": "idle-<runtime>-<timestamp>",
+  "goal": "idle baseline for <runtime> runtime",
+  "updated_at": "<iso8601-utc>",
+  "queue": [],
+  "active_step_id": null,
+  "steps": {},
+  "last_decision": "stop"
+}

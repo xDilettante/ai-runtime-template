@@ -111,7 +111,7 @@ Rebuild queue when:
   "assumptions": ["..."],
   "risks": ["..."],
   "checks": [
-    {"name": "go test ./...", "status": "passed", "details": "all green"}
+    {"name": "python3 scripts/validate_ai_state_schema.py", "status": "passed", "details": "runtime schemas validated"}
   ],
   "next_decision": "continue|rerun|escalate|stop",
   "next_action_required": false,

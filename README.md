@@ -55,21 +55,28 @@ ai-runtime-template/
 ```bash
 cd ai-runtime-template
 
-# 1) Поставить глобальные инструкции в HOME
-bash scripts/bootstrap_global_instructions.sh
+# 1) Посмотреть, что bootstrap изменит в HOME
+bash scripts/bootstrap_global_instructions.sh --dry-run
 
-# 2) Валидация лимитов инструкций
+# 2) Применить global instruction snapshots осознанно
+bash scripts/bootstrap_global_instructions.sh --yes
+
+# 3) Валидация лимитов инструкций
 python3 scripts/check_instruction_limits.py
 
-# 3) Проверка синхронизации AGENTS/CODEX/QWEN с unified policy
+# 4) Проверка синхронизации AGENTS/CODEX/QWEN с unified policy
 python3 scripts/verify_ai_policy_sync.py
 
-# 4) Инициализация runtime-state (локально)
+# 5) Инициализация runtime-state (shared schemas/templates уже versioned в repo)
 python3 scripts/init_ai_state_runtime.py
 
-# 5) Проверка схемы runtime-state
+# 6) Проверка схемы runtime-state
 python3 scripts/validate_ai_state_schema.py
 ```
+
+Shared contracts for runtime-state are versioned under:
+- `.ai-state/orchestrator/schemas/`
+- `.ai-state/orchestrator/templates/`
 
 ## 5) Запуск агентов (кратко)
 
@@ -184,14 +191,22 @@ git_writer=chief_coordinator
 Автоустановка:
 
 ```bash
-bash scripts/bootstrap_global_instructions.sh
+bash scripts/bootstrap_global_instructions.sh --dry-run
+bash scripts/bootstrap_global_instructions.sh --yes
 ```
 
 Скрипт ставит их в:
 - `~/.codex/AGENTS.md`
 - `~/.qwen/QWEN.md`
 
-и делает backup старых файлов (`.bak.<timestamp>`).
+Поддерживаются:
+- `--dry-run` для preview без записи
+- `--dest-home <path>` для безопасного тестового прогона
+- `--restore [--stamp <timestamp>]` для отката из backup
+
+Codex safety profiles:
+- default profile lives in `.codex/config.toml` and uses `approval_policy = "on-request"`
+- optional fast local profile example lives in `.codex/config.fast.toml.example`
 
 ## 11) Ежедневный operator workflow
 
@@ -200,6 +215,7 @@ bash scripts/bootstrap_global_instructions.sh
 ```bash
 python3 scripts/check_instruction_limits.py
 python3 scripts/verify_ai_policy_sync.py
+python3 scripts/init_ai_state_runtime.py
 ```
 
 После изменения инструкций/политик:

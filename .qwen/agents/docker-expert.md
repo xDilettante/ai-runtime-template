@@ -238,7 +238,7 @@ Development workflow:
 - Hot reload integration
 - Debugging port configuration
 - Developer onboarding docs
-- Makefile utility scripts
+- Task-runner utility scripts
 
 Monitoring and observability:
 - Structured logging

@@ -1,27 +1,21 @@
 # Глоссарий
 
-**xlog** — расширенная обёртка над log/slog с двойным выводом (консоль + файл) и маскировкой секретов.
+**AI runtime template** — репозиторий-шаблон с инструкциями, агентскими ролями, playbook-документацией, bootstrap-скриптами и валидацией для Codex и Qwen.
 
-**Sanitizer (Санитайзер)** — механизм маскировки чувствительных данных в логах. Проверяет ключи атрибутов на наличие чувствительных слов (token, password, secret, api_key, private_key и др.) с учётом границ слов.
+**Entrypoint instructions** — локальные файлы [`AGENTS.md`](../AGENTS.md) и [`QWEN.md`](../QWEN.md), которые задают проектные правила для соответствующего runtime.
 
-**MultiHandler** — handler, дублирующий записи в несколько destination'ов (например, консоль + файл). Реализует паттерн Chain of Responsibility.
+**Runtime state** — локальная директория `.ai-state/` с разделением по runtime:
+- `.ai-state/codex/orchestrator`
+- `.ai-state/qwen/orchestrator`
 
-**AsyncWriteCloser** — асинхронный writer с буферизацией для неблокирующей записи в файл. Использует канал и goroutine для отложенной записи, sync.Pool для переиспользования буферов.
+**Shared schemas/templates** — общие контракты в `.ai-state/orchestrator/schemas` и `.ai-state/orchestrator/templates`, которые используются обоими runtime.
 
-**ConsoleHandler** — handler для вывода логов в консоль с поддержкой:
-- KV формата (ключ=значение)
-- Pretty формата (цветной человекочитаемый вывод)
-- ANSI цветов (8 уровней)
-- Компонентных префиксов
+**Chief Coordinator** — главный агент верхнего уровня, который управляет планом, вызывает инструменты оркестрации и синтезирует финальный результат.
 
-**PrettyComponentColors** — карта цветов для компонентов лога (уровень, время, источник, сообщение, ключи, значения).
+**Specialist agent** — подагент с ограниченным scope, который решает конкретную подзадачу и возвращает evidence-backed результат.
 
-**PrettySourceRef** — формат отображения источника лога (функция, файл, строка, пакет).
+**Stateful resume** — продолжение работы по данным из `.ai-state/<runtime>/orchestrator/`, а не по свободному текстовому “продолжай”.
 
-**DropOnFull** — режим работы AsyncWriteCloser при заполненной очереди: true = терять новые записи, false = блокироваться.
+**Watchdog** — журнал и правила anti-stall, фиксирующие зависания, отсутствие tool-call после approval и другие orchestration faults.
 
-**lumberjack** — сторонняя библиотека (gopkg.in/natefinch/lumberjack.v2) для ротации лог-файлов.
-
-**slog.Handler** — стандартный интерфейс Go 1.21+ для обработки записей логов.
-
-**bufPool** — sync.Pool для переиспользования буферов []byte, снижает давление на GC.
+**Workspace** — локальная рабочая зона `workspace/` для AI-созданных проектов, не являющихся частью самого шаблона.

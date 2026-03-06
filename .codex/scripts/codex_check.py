@@ -14,10 +14,12 @@ def main() -> None:
     root = Path(__file__).resolve().parents[2]
     codex = root / ".codex"
     config_path = codex / "config.toml"
+    manifest_path = codex / "agents_manifest.toml"
     roles_dir = codex / "roles"
 
     required_paths = [
         config_path,
+        manifest_path,
         roles_dir,
         root / "AGENTS.md",
         root / "CODEX.md",
@@ -31,14 +33,24 @@ def main() -> None:
 
     with config_path.open("rb") as f:
         config = tomllib.load(f)
+    with manifest_path.open("rb") as f:
+        manifest = tomllib.load(f)
 
     agents = config.get("agents", {})
+    manifest_agents = manifest.get("agents", {})
     if not isinstance(agents, dict):
         fail("Invalid format: [agents] section is missing or malformed")
+    if not isinstance(manifest_agents, dict):
+        fail("Invalid format: agents manifest is missing or malformed")
 
     registered = dict(agents)
+    manifest_registered = dict(manifest_agents)
     if not registered:
         fail("No agent roles registered in .codex/config.toml")
+    if not manifest_registered:
+        fail("No agent roles registered in .codex/agents_manifest.toml")
+    if registered != manifest_registered:
+        fail("config.toml [agents] section is out of sync with .codex/agents_manifest.toml")
 
     role_files = {p.stem: p for p in roles_dir.glob("*.toml")}
     missing_files = []

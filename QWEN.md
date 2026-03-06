@@ -13,7 +13,6 @@ Primary operational policy is intentionally inlined here to minimize dependence 
 
 ## 2) Repository Mission and Boundaries
 - Repository purpose: reusable AI-template for practical engineering execution.
-- `xlog` and demo artifacts are intentional and should remain as capability showcase.
 - Application/runtime project code created during AI work must be placed under `workspace/`, not in the repository root.
 - Baseline expectations:
   - deterministic execution paths,
@@ -116,8 +115,8 @@ Write serialization:
 - `./scripts/ai_state_with_lock.sh codex <command...>`
 
 Initialization/validation:
-- `make ai-state-init`
-- `make ai-validate`
+- `python3 scripts/init_ai_state_runtime.py`
+- `python3 scripts/validate_ai_state_schema.py`
 
 ## 9) Multi-Agent Orchestration
 Orchestration authority (hard rule):
@@ -357,7 +356,6 @@ Canonical policy for both Codex and Qwen in this repository.
 
 ## 2) Mission of This Repository
 - This repo is a reusable template for AI-assisted engineering.
-- `xlog` and demo artifacts stay in place as explicit showcase of current agent capabilities.
 - The template must remain understandable, reproducible, and easy to fork.
 
 ## 3) Operating Protocol
@@ -552,7 +550,7 @@ Acceptance:
 Режим: Chief Coordinator.
 Цель: исправить <проблема>.
 Шаг: S3.
-Scope: pkg/xlog/...
+Scope: AGENTS.md, README.md, scripts/...
 Acceptance:
 1) тесты проходят
 2) регрессий нет

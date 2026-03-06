@@ -1,0 +1,7 @@
+{
+  "step_id": "S1",
+  "agent": "chief_coordinator",
+  "status": "pending",
+  "goal": "Describe current step goal here",
+  "updated_at": "<iso8601-utc>"
+}

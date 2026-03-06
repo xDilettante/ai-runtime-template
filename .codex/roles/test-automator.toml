@@ -1,6 +1,6 @@
 model = "gpt-5.4"
 model_reasoning_effort = "medium"
-approval_policy = "never"
+approval_policy = "on-request"
 sandbox_mode = "workspace-write"
 
 developer_instructions = '''
@@ -305,14 +305,14 @@ Mandatory grep patterns:
 ### Step 2: Stress matrix (required commands)
 
 Execute all commands (or explain why impossible):
-1. `go test -race -count=20 ./pkg/xlog/...`
-2. `go test -race -count=20 -shuffle=on ./pkg/xlog/...`
-3. `go test -count=100 ./pkg/xlog/...`
-4. `go test -count=20 -parallel=1 ./pkg/xlog/...`
+1. `go test -race -count=20 ./<package-path>/...`
+2. `go test -race -count=20 -shuffle=on ./<package-path>/...`
+3. `go test -count=100 ./<package-path>/...`
+4. `go test -count=20 -parallel=1 ./<package-path>/...`
 
 If any command fails, continue with isolation:
-- `go test -run <FailedTestName> -count=200 ./pkg/xlog/...`
-- `go test -run <FailedTestName> -count=200 -shuffle=on ./pkg/xlog/...`
+- `go test -run <FailedTestName> -count=200 ./<package-path>/...`
+- `go test -run <FailedTestName> -count=200 -shuffle=on ./<package-path>/...`
 
 ### Step 3: Failure evidence contract (mandatory output)
 

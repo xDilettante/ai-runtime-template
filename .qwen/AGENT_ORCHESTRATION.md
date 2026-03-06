@@ -109,7 +109,7 @@ Rebuild queue when:
   "assumptions": ["..."],
   "risks": ["..."],
   "checks": [
-    {"name": "go test ./...", "status": "passed", "details": "all green"}
+    {"name": "python3 scripts/validate_ai_state_schema.py", "status": "passed", "details": "runtime contracts validated"}
   ],
   "next_decision": "continue|rerun|escalate|stop",
   "next_action_required": false,
@@ -156,9 +156,9 @@ Auto-heal guardrail:
   "step_id": "S1",
   "agent": "golang-pro",
   "status": "awaiting_approval",
-  "goal": "Fix AsyncWriteCloser race and pool leak",
-  "files_touched": ["pkg/xlog/async_writer.go", "pkg/xlog/async_writer_test.go"],
-  "decisions": ["Preferred variant: A (atomic + protected select)"],
+  "goal": "Fix the current step scope",
+  "files_touched": ["path/to/file.ext", "path/to/test.ext"],
+  "decisions": ["Preferred variant: A"],
   "open_questions": ["Apply changes now?"],
   "approved": false,
   "next_action": "On approval, rerun same agent with RESUME_CONTEXT",
@@ -176,15 +176,15 @@ RESUME_CONTEXT:
 - prior_summary: <brief accepted summary from previous run>
 - approved_decision: <approved option, exact wording>
 - files_in_scope:
-  - pkg/xlog/async_writer.go
-  - pkg/xlog/async_writer_test.go
+  - path/to/file.ext
+  - path/to/test.ext
 - required_actions:
   1) apply approved implementation
   2) show diffs
   3) run required tests/benchmarks
 - acceptance_criteria:
-  - race-safe behavior preserved
-  - API unchanged
+  - behavior intent preserved
+  - contract unchanged unless approved
   - tests pass
 
 Work on implementation now, not analysis.

@@ -1,0 +1,54 @@
+{
+  "type": "object",
+  "required": [
+    "ts",
+    "run_id",
+    "step_id",
+    "agent",
+    "event",
+    "summary",
+    "status"
+  ],
+  "properties": {
+    "ts": {
+      "type": "string",
+      "minLength": 1
+    },
+    "run_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "step_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "agent": {
+      "type": "string",
+      "minLength": 1
+    },
+    "event": {
+      "type": "string",
+      "minLength": 1
+    },
+    "summary": {
+      "type": "string",
+      "minLength": 1
+    },
+    "status": {
+      "type": "string",
+      "minLength": 1
+    },
+    "source_actor": {
+      "type": "string"
+    },
+    "request_id": {
+      "type": "string"
+    },
+    "artifacts": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    }
+  }
+}

@@ -1,6 +1,6 @@
 model = "gpt-5.4"
 model_reasoning_effort = "medium"
-approval_policy = "never"
+approval_policy = "on-request"
 sandbox_mode = "workspace-write"
 
 developer_instructions = '''
@@ -111,7 +111,7 @@ Build and tooling:
 - Cross-compilation setup
 - CGO usage guidelines
 - Go generate workflows
-- Makefile conventions
+- Task runner conventions (make/just/task)
 - Docker multi-stage builds
 - CI/CD optimization
 

@@ -12,6 +12,36 @@ def now_iso() -> str:
     return datetime.now(timezone.utc).replace(microsecond=0).isoformat().replace('+00:00', 'Z')
 
 
+def ensure_shared_contracts(root: Path) -> None:
+    shared = root / ".ai-state" / "orchestrator"
+    schemas = shared / "schemas"
+    templates = shared / "templates"
+
+    required = [
+        schemas / "state.schema.json",
+        schemas / "checkpoint.schema.json",
+        schemas / "watchdog.schema.json",
+        schemas / "agent_trace.schema.json",
+        schemas / "step_result.schema.json",
+        templates / "state.template.json",
+        templates / "checkpoint.template.json",
+        templates / "watchdog.template.json",
+        templates / "agent_trace.template.json",
+        templates / "task_prompt_fix.md",
+        templates / "task_prompt_review.md",
+        templates / "task_prompt_verify.md",
+        shared / "WATCHDOG_PROTOCOL.md",
+    ]
+    missing = [str(path.relative_to(root)) for path in required if not path.exists()]
+    if missing:
+        missing_list = "\n- ".join(missing)
+        raise SystemExit(
+            "Missing shared .ai-state contracts required for a clean runtime bootstrap.\n"
+            "Expected versioned files:\n- "
+            f"{missing_list}"
+        )
+
+
 def ensure_runtime(root: Path, runtime: str) -> None:
     orch = root / ".ai-state" / runtime / "orchestrator"
     agents = orch / "agents"
@@ -108,6 +138,7 @@ def main() -> None:
     args = parser.parse_args()
 
     root = Path(__file__).resolve().parents[1]
+    ensure_shared_contracts(root)
     runtimes = ["codex", "qwen"] if args.runtime == "all" else [args.runtime]
 
     for runtime in runtimes:

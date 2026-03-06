@@ -1,0 +1,14 @@
+{
+  "ts": "<iso8601-utc>",
+  "run_id": "idle-<runtime>",
+  "step_id": "S0",
+  "agent": "bootstrap",
+  "event": "parsed_context",
+  "summary": "initialized runtime state",
+  "status": "ok",
+  "source_actor": "<runtime>",
+  "request_id": "bootstrap-<runtime>",
+  "artifacts": [
+    ".ai-state/<runtime>/orchestrator/state.json"
+  ]
+}

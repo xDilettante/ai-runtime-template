@@ -41,12 +41,22 @@ def validate_jsonl(path: Path, required_fields: list[str] | None = None) -> None
 
 
 def main() -> None:
+    print(
+        "[legacy] .codex/scripts/validate_ai_state.py validates only the pre-split "
+        ".ai-state/orchestrator layout. For current codex/qwen runtime roots use "
+        "scripts/validate_ai_state_schema.py."
+    )
     root = Path(__file__).resolve().parents[2]
     orch = root / ".ai-state" / "orchestrator"
     if not orch.exists():
-        fail(f"Missing orchestrator directory: {orch}")
+        print(f"[legacy] skipped: no legacy orchestrator directory at {orch}")
+        return
 
     state_path = orch / "state.json"
+    if not state_path.exists():
+        print(f"[legacy] skipped: shared directory exists but no legacy state file at {state_path}")
+        return
+
     state = read_json(state_path)
     required_state_keys = {"version", "goal", "updated_at", "queue", "active_step_id", "steps"}
     missing_state = required_state_keys - state.keys()

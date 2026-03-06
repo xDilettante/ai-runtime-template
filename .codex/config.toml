@@ -1,9 +1,9 @@
 # Codex multi-agent configuration (experimental feature)
-# Source of truth: .codex/roles/*.toml
+# Source of truth for [agents]: .codex/agents_manifest.toml
 
 model = "gpt-5.4"
 model_reasoning_effort = "medium"
-approval_policy = "never"
+approval_policy = "on-request"
 sandbox_mode = "workspace-write"
 # Runtime hard cap in current environment is 6 active subagents.
 max_threads = 6
@@ -14,7 +14,7 @@ job_max_runtime_seconds = 1800
 multi_agent = true
 
 [agents]
-# Keep sequential execution by default for predictable handoffs.
+# Generated from .codex/agents_manifest.toml via .codex/scripts/generate_codex_config.py.
 
 [agents."accessibility-tester"]
 description = "Use this agent when you need comprehensive accessibility testing, WCAG compliance verification, or assessment of assistive technology support."
@@ -539,3 +539,4 @@ config_file = "roles/wordpress-master.toml"
 [agents."workflow-orchestrator"]
 description = "Use this agent when you need to design, implement, or optimize complex business process workflows with multiple states, error handling, and transaction management."
 config_file = "roles/workflow-orchestrator.toml"
+
