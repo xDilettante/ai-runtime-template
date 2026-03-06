@@ -8,7 +8,7 @@
 - `.ai-state/codex/orchestrator`
 - `.ai-state/qwen/orchestrator`
 
-**Shared schemas/templates** — общие контракты в `.ai-state/orchestrator/schemas` и `.ai-state/orchestrator/templates`, которые используются обоими runtime.
+**Shared schemas/templates** — общие контракты в `contracts/orchestrator/schemas` и `contracts/orchestrator/templates`, которые используются обоими runtime.
 
 **Chief Coordinator** — главный агент верхнего уровня, который управляет планом, вызывает инструменты оркестрации и синтезирует финальный результат.
 

@@ -107,8 +107,8 @@ To prevent cross-engine conflicts, runtime state is split:
 - Codex runtime root: `.ai-state/codex/orchestrator`
 
 Shared contracts only:
-- `.ai-state/orchestrator/schemas`
-- `.ai-state/orchestrator/templates`
+- `contracts/orchestrator/schemas`
+- `contracts/orchestrator/templates`
 
 Write serialization:
 - `./scripts/ai_state_with_lock.sh qwen <command...>`
@@ -274,7 +274,7 @@ Observability:
 When behavior/process changes:
 - update relevant docs with concrete operational deltas,
 - keep quickstart and verification commands accurate,
-- keep state/runtime artifacts out of template baseline (except schemas/templates/contracts).
+- keep generated state/runtime artifacts out of template baseline; only versioned contracts belong under `contracts/`.
 
 ## 19) Anti-Patterns
 - broad rewrites without acceptance criteria,

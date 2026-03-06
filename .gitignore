@@ -1,13 +1,7 @@
 # Runtime state (generated locally)
-.ai-state/*
-!.ai-state/orchestrator/
-.ai-state/orchestrator/*
-!.ai-state/orchestrator/schemas/
-!.ai-state/orchestrator/templates/
-!.ai-state/orchestrator/WATCHDOG_PROTOCOL.md
-!.ai-state/orchestrator/schemas/**
-!.ai-state/orchestrator/templates/**
+.ai-state/
 
+# Versioned shared contracts live in contracts/ (tracked)
 # AI project workspace (keep only instructions tracked)
 workspace/*
 !workspace/AGENTS.md

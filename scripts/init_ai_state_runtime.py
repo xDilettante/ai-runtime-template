@@ -13,7 +13,7 @@ def now_iso() -> str:
 
 
 def ensure_shared_contracts(root: Path) -> None:
-    shared = root / ".ai-state" / "orchestrator"
+    shared = root / "contracts" / "orchestrator"
     schemas = shared / "schemas"
     templates = shared / "templates"
 
@@ -36,7 +36,7 @@ def ensure_shared_contracts(root: Path) -> None:
     if missing:
         missing_list = "\n- ".join(missing)
         raise SystemExit(
-            "Missing shared .ai-state contracts required for a clean runtime bootstrap.\n"
+            "Missing shared runtime contracts required for a clean runtime bootstrap.\n"
             "Expected versioned files:\n- "
             f"{missing_list}"
         )

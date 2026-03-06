@@ -4,12 +4,13 @@
 - Scope: AI infrastructure only (Codex + Qwen)
 - Runtime code: excluded by design
 - Release state source of truth: this file
-- State: truth-synced and template-hardened baseline
-- Release gate: `ready`
+- Maturity: `operator-tested`
+- State: operator-tested template baseline
+- Release gate: `fork-ready`
 - Notes:
-  - shared `.ai-state` contracts are versioned in-repo
+  - shared runtime contracts are versioned in `contracts/orchestrator`
   - legacy release/audit notes remain only as archival context
-  - safer Codex defaults and reversible bootstrap flow are in place
+  - safe Codex defaults and reversible bootstrap flow are in place
 
 ## Readiness checklist
 
@@ -19,5 +20,6 @@
 - [x] Validation scripts are present
 - [x] Runtime artifacts and binaries are excluded
 - [x] Clean-clone quick start is self-contained
+- [x] Versioned contracts are separate from generated runtime-state
 - [x] Release notes and status docs are fully synchronized
 - [x] Legacy Go/xlog references are removed from template-facing docs

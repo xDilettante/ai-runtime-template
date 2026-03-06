@@ -198,7 +198,7 @@ def main() -> None:
     root = Path(__file__).resolve().parents[1]
     mode = parse_mode()
 
-    shared = root / ".ai-state" / "orchestrator" / "schemas"
+    shared = root / "contracts" / "orchestrator" / "schemas"
     if not shared.exists():
         fail(f"Missing shared schemas directory: {shared}")
 

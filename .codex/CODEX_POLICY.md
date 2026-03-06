@@ -12,7 +12,7 @@ This policy applies to all roles in `.codex/roles/`.
 - Include exact commands/paths/artifacts when reporting technical results.
 - For failures, include reproducible steps.
 - For implementation/review/verification steps, return machine-parseable JSON
-  matching `.ai-state/orchestrator/schemas/step_result.schema.json`.
+  matching `contracts/orchestrator/schemas/step_result.schema.json`.
 - If free text is needed, put it under `summary` and `notes` fields only.
 
 ## 3) Routing and delegation

@@ -1,4 +1,4 @@
-# Codex multi-agent configuration (experimental feature)
+# Codex project configuration (trusted-project baseline)
 # Source of truth for [agents]: .codex/agents_manifest.toml
 
 model = "gpt-5.4"
@@ -11,7 +11,7 @@ max_depth = 3
 job_max_runtime_seconds = 1800
 
 [features]
-multi_agent = true
+multi_agent = false
 
 [agents]
 # Generated from .codex/agents_manifest.toml via .codex/scripts/generate_codex_config.py.

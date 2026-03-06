@@ -74,9 +74,9 @@ python3 scripts/init_ai_state_runtime.py
 python3 scripts/validate_ai_state_schema.py
 ```
 
-Shared contracts for runtime-state are versioned under:
-- `.ai-state/orchestrator/schemas/`
-- `.ai-state/orchestrator/templates/`
+Versioned contracts for runtime-state are stored separately from generated `.ai-state` under:
+- `contracts/orchestrator/schemas/`
+- `contracts/orchestrator/templates/`
 
 ## 5) Запуск агентов (кратко)
 
@@ -205,7 +205,7 @@ bash scripts/bootstrap_global_instructions.sh --yes
 - `--restore [--stamp <timestamp>]` для отката из backup
 
 Codex safety profiles:
-- default profile lives in `.codex/config.toml` and uses `approval_policy = "on-request"`
+- default profile lives in `.codex/config.toml` and uses `approval_policy = "on-request"` with `multi_agent = false`
 - optional fast local profile example lives in `.codex/config.fast.toml.example`
 
 ## 11) Ежедневный operator workflow
