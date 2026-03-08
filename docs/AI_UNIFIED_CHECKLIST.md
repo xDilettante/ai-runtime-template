@@ -38,6 +38,7 @@
 - [ ] User-facing behavior changes documented.
 - [ ] `STATUS.md` updated if project state changed.
 - [ ] `DEVLOG.md` updated for significant work.
+- [ ] `SUMMARY.md` updated if operator quick-start or repository orientation changed.
 - [ ] Launch/run commands remain accurate.
 
 ## G) Git and Delivery

@@ -236,5 +236,7 @@ python3 scripts/validate_ai_state_schema.py
 
 ## 13) Статус и лицензия
 
-- `STATUS.md` — текущее состояние шаблона.
+- `STATUS.md` — текущее состояние и readiness source of truth.
+- `DEVLOG.md` — журнал значимых изменений, проверок и долгов.
+- `SUMMARY.md` — краткая операторская сводка и быстрый вход в репозиторий.
 - `LICENSE` — MIT.

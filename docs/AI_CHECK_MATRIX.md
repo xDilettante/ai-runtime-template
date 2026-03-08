@@ -101,7 +101,7 @@ For each check capture:
 - update reference docs and examples
 
 ### Workflow changed
-- update STATUS/DEVLOG where applicable
+- update STATUS/DEVLOG and SUMMARY where applicable
 
 ## 7) Delivery Matrix
 ### success

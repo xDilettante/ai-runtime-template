@@ -11,7 +11,7 @@ max_depth = 3
 job_max_runtime_seconds = 1800
 
 [features]
-multi_agent = false
+multi_agent = true
 
 [agents]
 # Generated from .codex/agents_manifest.toml via .codex/scripts/generate_codex_config.py.
@@ -539,4 +539,3 @@ config_file = "roles/wordpress-master.toml"
 [agents."workflow-orchestrator"]
 description = "Use this agent when you need to design, implement, or optimize complex business process workflows with multiple states, error handling, and transaction management."
 config_file = "roles/workflow-orchestrator.toml"
-

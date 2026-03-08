@@ -400,10 +400,15 @@ Canonical policy for both Codex and Qwen in this repository.
 
 ## 8) Documentation Strategy
 - Keep docs and code aligned after meaningful changes.
+- Status artifacts in repo root have fixed roles:
+  - `STATUS.md` = current release/readiness source of truth,
+  - `DEVLOG.md` = chronological log of meaningful changes, checks, and known debts,
+  - `SUMMARY.md` = operator quick-start and current high-signal overview.
 - Update status artifacts when behavior/process changed:
-  - `STATUS.md` for current state,
-  - `DEVLOG.md` for historical context,
-  - `README.md` for usage impact.
+  - `STATUS.md` when current state, readiness, or active constraints changed,
+  - `DEVLOG.md` for significant work, validation evidence, or explicit debt notes,
+  - `SUMMARY.md` when operator commands, entry flow, or key repository orientation changed,
+  - `README.md` for broader usage impact.
 - Prefer short, actionable docs over narrative text walls.
 
 ## 9) Git Governance
@@ -507,6 +512,7 @@ For substantive tasks, final output should include:
 - [ ] User-facing behavior changes documented.
 - [ ] `STATUS.md` updated if project state changed.
 - [ ] `DEVLOG.md` updated for significant work.
+- [ ] `SUMMARY.md` updated if operator quick-start or repository orientation changed.
 - [ ] Launch/run commands remain accurate.
 
 ## G) Git and Delivery
@@ -757,7 +763,7 @@ For each check capture:
 - update reference docs and examples
 
 ### Workflow changed
-- update STATUS/DEVLOG where applicable
+- update STATUS/DEVLOG and SUMMARY where applicable
 
 ## 7) Delivery Matrix
 ### success
